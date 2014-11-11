@@ -1,0 +1,105 @@
+@import play.api.libs.json.JsObject
+@import scala.collection.mutable
+@import controllers.User
+@import controllers.Beer
+@import controllers.Comment
+@import controllers.Toast
+@import controllers.Checkin
+
+@(checkins: mutable.MutableList[Checkin])
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/ratings.css")">
+
+            <!--
+    HootSuite API JS Library
+    NOTE: To test themes outside of the dashboard, add '?theme=blue_steel' to your url [blue_steel, magnum, classic]
+    -->
+        <script type="text/javascript" src="https://hootsuite.s3.amazonaws.com/jsapi/0-5/hsp.js"></script>
+
+            <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+
+        <script type="text/javascript" src="@routes.Assets.at("js/hootsuite-init.js")"></script>
+    </head>
+    <body>
+        <div class="hs_stream">
+            <div class="hs_topBar">
+                <div class="hs_content">
+                    <div class="hs_controls">
+                            <!--
+            Toby Sullivan
+            <img style="width: 28px; height: 28px; border-radius: 14px; vertical-align: middle" src="https://gravatar.com/avatar/f0fe6cfbfa8d57c405afac45fd420dc1?size=100&d=https%3A%2F%2Fd1c8v1qci5en44.cloudfront.net%2Fsite%2Fassets%2Fimages%2Fdefault_avatar_v2.jpg%3Fv%3D1" alt="Toby Sullivan">
+            -->
+                        <a href="#" title="Menu"><span class="icon-19 dropdown" /></a>
+                    </div>
+
+                        <!--
+          <img style="width: 28px; height: 28px; border-radius: 4px; vertical-align: middle" src="https://pbs.twimg.com/profile_images/461409373709811712/rD3OvWzE.jpeg" alt="Untappd for Hootsuite">
+          <span style="font-weight: bold;">Untappd for Hootsuite</span>
+          -->
+                    <span style="font-weight: bold;">Checkin Feed </span>
+                </div>
+            </div>
+            <div class="hs_topBarSpace"></div>
+
+    @for(checkin <- checkins) {
+        <div class="hs_message">
+            <a href="#" class="hs_networkAvatarLink"></a>
+            <img class="hs_networkAvatar" src="@checkin.user.avatar" alt="Mackenzie Marshall">
+
+            <a href="#" class="hs_networkName">@checkin.user.first_name @checkin.user.last_name</a>
+
+            <a href="[PERMALINK / SOURCE URL]" class="hs_postTime" target="_blank">3 hours ago</a>
+
+            <div class="hs_messageContent">
+                @checkin.user_comment
+                    <!-- Comment goes here -->
+
+            </div>
+
+            <div class="hs_postAttachment">
+
+                    <!-- This should link out directly to the source page -->
+                <a class="hs_attachedLink " href="#" target="_blank">
+                        <!-- Thumb: max. 130x200px (gets scaled down automatically) -->
+                    <img alt="@checkin.beer.name by @checkin.beer.brewery" src="@checkin.beer.logo">
+                </a>
+
+                <div class="hs_title">
+                        <!-- This should link out directly to the source page -->
+                    <a href="#" target="_blank">@checkin.beer.name</a>
+                </div>
+
+                <div class="hs_caption">by <a href="#">@checkin.beer.brewery</a></div><!-- The link's domain name -->
+                <div class="hs_description">
+
+                    <span class="rating small r@checkin.rating"></span>
+
+                </div>
+
+
+            </div>
+
+            <div class="hs_messageComments">
+                <span class="hs_arrow">☗</span>
+
+                <div class="hs_comment hs_details">
+                    <a href="#">Ian L.</a> toasted this
+                </div>
+
+                <div class="hs_commentEntry hs_comment">
+                    <div class="hs_btns hs_btns-left">
+                        <a class="hs_btn-cmt" href="#">Toast</a>
+                        <a class="hs_btn-cmt" href="#">Comment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+        </div>
+    </body>
+</html>
