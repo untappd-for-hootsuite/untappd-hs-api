@@ -12,7 +12,7 @@ class User (val id: Int, val first_name: String, val last_name: String, val user
 class Beer (val id: Int, val name: String, val logo: String, val brewery: String, val brewery_id: Int)
 class Toast (val id: Int, val user: User, val created_at: String)
 class Comment (val id: Int, val user: User, val comment: String, val created_at: String)
-class Checkin (val id: Int, val user: User, val beer: Beer, val toasts: List[Toast], val comments: List[Comment],
+class Checkin (val id: Int, val user: User, val beer: Beer, val toasts: mutable.MutableList[Toast], val comments: mutable.MutableList[Comment],
                val user_comment: String, val rating: Int, val created_at: String)
 
 object Users extends Controller {
@@ -62,6 +62,8 @@ object Users extends Controller {
 
       val jsonBeer = checkin.value("beer").as[JsObject]
       val jsonBrewery = checkin.value("brewery").as[JsObject]
+      val jsonComments = checkin.value("comments").as[JsObject]
+      val jsonToasts = checkin.value("toasts").as[JsObject]
 
       val modelBeer = new Beer (
         jsonBeer.value("bid").as[Int],
@@ -71,20 +73,66 @@ object Users extends Controller {
         jsonBrewery.value("brewery_id").as[Int]
       )
 
+      val modelToasts = mutable.MutableList[Toast]()
+      if (jsonToasts.value("count").as[Int] > 0) {
+        println("Adding toasts")
+        val toasts = jsonToasts.value("items").as[List[JsObject]]
+
+        for (toast <- toasts) {
+          val jsonToastUser = toast.value("user").as[JsObject]
+          val modelToastUser = new User (
+            jsonToastUser.value("uid").as[Int],
+            jsonToastUser.value("first_name").as[String],
+            jsonToastUser.value("last_name").as[String],
+            jsonToastUser.value("user_name").as[String],
+            jsonToastUser.value("user_avatar").as[String]
+          )
+          val modelToast = new Toast (
+            toast.value("like_id").as[Int],
+            modelToastUser,
+            toast.value("created_at").as[String]
+          )
+          modelToasts.++=(mutable.MutableList[Toast](modelToast))
+        }
+        println(modelToasts)
+      }
+
+      val modelComments = mutable.MutableList[Comment]()
+      if (jsonComments.value("count").as[Int] > 0) {
+        println("Adding comments")
+        val comments = jsonComments.value("items").as[List[JsObject]]
+
+        for (comment <- comments) {
+          val jsonCommentUser = comment.value("user").as[JsObject]
+          val modelCommentUser = new User (
+            jsonCommentUser.value("uid").as[Int],
+            jsonCommentUser.value("first_name").as[String],
+            jsonCommentUser.value("last_name").as[String],
+            jsonCommentUser.value("user_name").as[String],
+            jsonCommentUser.value("user_avatar").as[String]
+          )
+          val modelComment = new Comment(
+            comment.value("comment_id").as[Int],
+            modelCommentUser,
+            comment.value("comment").as[String],
+            comment.value("created_at").as[String]
+          )
+          modelComments.++=(mutable.MutableList[Comment](modelComment))
+        }
+      }
+      println(modelToasts)
       val modelCheckin = new Checkin (
         checkin.value("checkin_id").as[Int],
         modelUser,
         modelBeer,
-        List[Toast](),
-        List[Comment](),
+        modelToasts,
+        modelComments,
         checkin.value("checkin_comment").as[String],
         (checkin.value("rating_score").as[Float]*10).asInstanceOf[Int],
         checkin.value("created_at").as[String]
       )
-      print(modelCheckin.id)
       modelCheckins.++=(mutable.MutableList[Checkin](modelCheckin))
     }
-    println(modelCheckins)
 
     Ok(views.html.streams(modelCheckins))
     //Ok(apiResponse)

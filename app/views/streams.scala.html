@@ -85,18 +85,53 @@
             </div>
 
             <div class="hs_messageComments">
-                <span class="hs_arrow">☗</span>
+                @if(checkin.toasts.size > 3) {
+                    <span class="hs_arrow">☗</span>
 
-                <div class="hs_comment hs_details">
-                    <a href="#">Ian L.</a> toasted this
-                </div>
+                    <div class="hs_comment hs_details">
+                        <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>, <a href="#">@checkin.toasts.apply(1).user.first_name @checkin.toasts.apply(1).user.last_name</a> and <a href="#">@(checkin.toasts.size-2) others</a> have toasted this
+                    </div>
+                } else {
+                    @if(checkin.toasts.size == 3) {
+                        <span class="hs_arrow">☗</span>
 
+                        <div class="hs_comment hs_details">
+                            <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>, <a href="#">@checkin.toasts.apply(1).user.first_name @checkin.toasts.apply(1).user.last_name</a> and <a href="#">@(checkin.toasts.size-2) other</a> have toasted this
+                        </div>
+                    } else {
+                        @if(checkin.toasts.size == 2) {
+                            <span class="hs_arrow">☗</span>
+
+                            <div class="hs_comment hs_details">
+                                <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>
+                                and <a href="#">@checkin.toasts.apply(1).user.first_name @checkin.toasts.apply(1).user.last_name</a>
+                                have toasted this
+                            </div>
+                        } else {
+                            @if(checkin.toasts.size == 1) {
+                                <span class="hs_arrow">☗</span>
+
+                                <div class="hs_comment hs_details">
+                                    <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>
+                                    has toasted this
+                                </div>
+                            } else {
+                                <span class="hs_arrow">☗</span>
+
+                                <div class="hs_comment hs_details">
+                                    No one has toasted this
+                                </div>
+                            }
+                        }
+                    }
+                }
                 <div class="hs_commentEntry hs_comment">
                     <div class="hs_btns hs_btns-left">
                         <a class="hs_btn-cmt" href="#">Toast</a>
                         <a class="hs_btn-cmt" href="#">Comment</a>
                     </div>
                 </div>
+
             </div>
         </div>
     }
