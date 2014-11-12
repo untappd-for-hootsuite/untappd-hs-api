@@ -125,6 +125,19 @@
                         }
                     }
                 }
+                @if(checkin.comments.size > 0) {
+                    @for(comment <- checkin.comments) {
+                        <div class="hs_comment">
+                            <a title="Username" class="hs_networkAvatarLink" href="#"></a>
+                            <img class="hs_networkAvatar" src="@comment.user.avatar" alt="@comment.user.first_name @comment.user.last_name">
+                            <p class="hs_commentContent">
+                                <a title="Username" class="hs_networkName" href="#">@comment.user.first_name @comment.user.last_name</a>
+                                : @comment.comment
+                                <span class="hs_date">@comment.created_at</span>
+                            </p>
+                        </div>
+                    }
+                }
                 <div class="hs_commentEntry hs_comment">
                     <div class="hs_btns hs_btns-left">
                         <a class="hs_btn-cmt" href="#">Toast</a>

@@ -75,7 +75,6 @@ object Users extends Controller {
 
       val modelToasts = mutable.MutableList[Toast]()
       if (jsonToasts.value("count").as[Int] > 0) {
-        println("Adding toasts")
         val toasts = jsonToasts.value("items").as[List[JsObject]]
 
         for (toast <- toasts) {
@@ -94,7 +93,6 @@ object Users extends Controller {
           )
           modelToasts.++=(mutable.MutableList[Toast](modelToast))
         }
-        println(modelToasts)
       }
 
       val modelComments = mutable.MutableList[Comment]()
@@ -120,7 +118,7 @@ object Users extends Controller {
           modelComments.++=(mutable.MutableList[Comment](modelComment))
         }
       }
-      println(modelToasts)
+      println(modelComments)
       val modelCheckin = new Checkin (
         checkin.value("checkin_id").as[Int],
         modelUser,
