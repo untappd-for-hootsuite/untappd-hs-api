@@ -1,12 +1,6 @@
-@import play.api.libs.json.JsObject
-@import scala.collection.mutable
-@import controllers.User
-@import controllers.Beer
-@import controllers.Comment
-@import controllers.Toast
-@import controllers.Checkin
+@import models.Checkin
 
-@(checkins: mutable.MutableList[Checkin])
+@(checkins: Seq[Checkin])
 
 
 <!DOCTYPE html>
@@ -66,7 +60,7 @@
                     <!-- This should link out directly to the source page -->
                 <a class="hs_attachedLink " href="#" target="_blank">
                         <!-- Thumb: max. 130x200px (gets scaled down automatically) -->
-                    <img alt="@checkin.beer.name by @checkin.beer.brewery" src="@checkin.beer.logo">
+                    <img alt="@checkin.beer.name by @checkin.brewery.name" src="@checkin.beer.label">
                 </a>
 
                 <div class="hs_title">
@@ -74,7 +68,7 @@
                     <a href="#" target="_blank">@checkin.beer.name</a>
                 </div>
 
-                <div class="hs_caption">by <a href="#">@checkin.beer.brewery</a></div><!-- The link's domain name -->
+                <div class="hs_caption">by <a href="#">@checkin.brewery.name</a></div><!-- The link's domain name -->
                 <div class="hs_description">
 
                     <span class="rating small r@checkin.rating"></span>
@@ -85,48 +79,54 @@
             </div>
 
             <div class="hs_messageComments">
-                @if(checkin.toasts.size > 3) {
-                    <span class="hs_arrow">☗</span>
-
-                    <div class="hs_comment hs_details">
-                        <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>, <a href="#">@checkin.toasts.apply(1).user.first_name @checkin.toasts.apply(1).user.last_name</a> and <a href="#">@(checkin.toasts.size-2) others</a> have toasted this
-                    </div>
-                } else {
-                    @if(checkin.toasts.size == 3) {
+                @if(checkin.toasts.isDefined) {
+                    @if(checkin.toasts.get.size > 3) {
                         <span class="hs_arrow">☗</span>
 
                         <div class="hs_comment hs_details">
-                            <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>, <a href="#">@checkin.toasts.apply(1).user.first_name @checkin.toasts.apply(1).user.last_name</a> and <a href="#">@(checkin.toasts.size-2) other</a> have toasted this
+                            <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
+                            , <a href="#">@checkin.toasts.get.apply(1).user.first_name @checkin.toasts.get.apply(1).user.last_name</a>
+                            and <a href="#">@(checkin.toasts.size - 2) others</a> have toasted this
                         </div>
                     } else {
-                        @if(checkin.toasts.size == 2) {
+                        @if(checkin.toasts.get.size == 3) {
                             <span class="hs_arrow">☗</span>
 
                             <div class="hs_comment hs_details">
-                                <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>
-                                and <a href="#">@checkin.toasts.apply(1).user.first_name @checkin.toasts.apply(1).user.last_name</a>
-                                have toasted this
+                                <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
+                                , <a href="#">@checkin.toasts.get.apply(1).user.first_name @checkin.toasts.get.apply(1).user.last_name</a>
+                                and <a href="#">@(checkin.toasts.size - 2) other</a> have toasted this
                             </div>
                         } else {
-                            @if(checkin.toasts.size == 1) {
+                            @if(checkin.toasts.get.size == 2) {
                                 <span class="hs_arrow">☗</span>
 
                                 <div class="hs_comment hs_details">
-                                    <a href="#">@checkin.toasts.head.user.first_name @checkin.toasts.head.user.last_name</a>
-                                    has toasted this
+                                    <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
+                                    and <a href="#">@checkin.toasts.get.apply(1).user.first_name @checkin.toasts.get.apply(1).user.last_name</a>
+                                    have toasted this
                                 </div>
                             } else {
-                                <span class="hs_arrow">☗</span>
+                                @if(checkin.toasts.get.size == 1) {
+                                    <span class="hs_arrow">☗</span>
 
-                                <div class="hs_comment hs_details">
-                                    No one has toasted this
-                                </div>
+                                    <div class="hs_comment hs_details">
+                                        <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
+                                        has toasted this
+                                    </div>
+                                } else {
+                                    <span class="hs_arrow">☗</span>
+
+                                    <div class="hs_comment hs_details">
+                                        No one has toasted this
+                                    </div>
+                                }
                             }
                         }
                     }
                 }
-                @if(checkin.comments.size > 0) {
-                    @for(comment <- checkin.comments) {
+                @if(checkin.comments.isDefined) {
+                    @for(comment <- checkin.comments.get) {
                         <div class="hs_comment">
                             <a title="Username" class="hs_networkAvatarLink" href="#"></a>
                             <img class="hs_networkAvatar" src="@comment.user.avatar" alt="@comment.user.first_name @comment.user.last_name">
