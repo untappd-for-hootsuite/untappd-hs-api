@@ -12,142 +12,162 @@
     HootSuite API JS Library
     NOTE: To test themes outside of the dashboard, add '?theme=blue_steel' to your url [blue_steel, magnum, classic]
     -->
-        <script type="text/javascript" src="https://hootsuite.s3.amazonaws.com/jsapi/0-5/hsp.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://d2l6uygi1pgnys.cloudfront.net/jsapi/0-6/assets/css/ad_default.css">
 
-            <!-- jQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+        <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/0-6/hsp.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
 
         <script type="text/javascript" src="@routes.Assets.at("js/hootsuite-init.js")"></script>
     </head>
     <body>
         <div class="hs_stream">
+                <!--Top Bar-->
             <div class="hs_topBar">
-                <div class="hs_content">
-                    <div class="hs_controls">
+                <div class="hs_topBarContent">
+                        <!--Right-Side Controls-->
+                    <ul class="hs_topBarControls">
+                        <li class="hs_topBarControlsBtn" data-dropdown="WriteMessage" title="Write Message">
+                            <span class="icon-app-dir x-compose"></span>
+                        </li>
+                        <li class="hs_topBarControlsBtn" data-dropdown="Search" title="Search">
+                            <span class="icon-app-dir x-search"></span>
+                        </li>
+                        <li class="hs_topBarControlsBtn" data-dropdown="Settings" title="Settings">
+                            <span class="icon-app-dir x-settings"></span>
+                        </li>
+                        <li class="hs_topBarControlsBtn" data-dropdown="MenuList" title="More">
+                            <span class="icon-app-dir x-ellipsis"></span>
+                        </li>
+                    </ul>
+
+                        <!--Left-Side Title-->
+                    <h1 class="hs_topBarTitle">Top bar</h1>
+                </div>
+
+                    <!--Drop Downs-->
+                    <!--Write Message-->
+                <div class="hs_topBarDropdown hs_dropdownWriteMessage" data-dropdown="WriteMessage">
+                    <button class="hs_btnCtaSml hs_btnTypeSubmit">Send</button>
+                    <div class="hs_searchWrapper">
+                        <label class="hs_isVisuallyHidden" for="hs_writeMessageInputExample">Search:</label>
+                        <input id="hs_writeMessageInputExample" type="text">
+                    </div>
+                </div>
+
+                    <!--Search-->
+                <div class="hs_topBarDropdown hs_dropdownSearch" data-dropdown="Search">
+                    <button class="hs_btnCtaSml hs_btnTypeSubmit">Search</button>
+                    <div class="hs_searchWrapper">
+                        <label class="hs_isVisuallyHidden" for="hs_searchInputExample">Search:</label>
+                        <input id="hs_searchInputExample" type="text">
+                    </div>
+                </div>
+
+                    <!--Settings-->
+                <div class="hs_topBarDropdown hs_dropdownSettings" data-dropdown="Settings">
+                    <a class="hs_settingsLink" href="#">Settings Link</a>
+                    <label for="hs_settingsCheckboxExample" class="hs_title">
+                        <input id="hs_settingsCheckboxExample" type="checkbox" /> Setting 1
+                    </label>
+                    <button class="hs_btnCtaSml hs_btnTypeSubmit">Save</button>
+                </div>
+
+                    <!--Menu List-->
+                <ul class="hs_topBarDropdown hs_dropdownMenuList" data-dropdown="MenuList">
+                    <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 1</a></li>
+                    <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 2</a></li>
+                    <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 3</a></li>
+                </ul>
+            </div>
+
+            @for(checkin <- checkins) {
+                <div class="hs_message">
+                    <div class="hs_messageOptions">
                             <!--
-            Toby Sullivan
-            <img style="width: 28px; height: 28px; border-radius: 14px; vertical-align: middle" src="https://gravatar.com/avatar/f0fe6cfbfa8d57c405afac45fd420dc1?size=100&d=https%3A%2F%2Fd1c8v1qci5en44.cloudfront.net%2Fsite%2Fassets%2Fimages%2Fdefault_avatar_v2.jpg%3Fv%3D1" alt="Toby Sullivan">
-            -->
-                        <a href="#" title="Menu"><span class="icon-19 dropdown" /></a>
+                  NOTE: Do not show more than 4 icons; use the drop down if you need 5 or more
+                        "Share" links should open the Compose Message dialog in the Hootsuite dashboard via hsp.composeMessage()
+                -->
+                        <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
+                        <button class="hs_messageOptionsBtn icon-app-dir x-retweet" title="Retweet"></button>
+                        <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
+
+                        <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
+
+                        <div class="hs_moreOptionsMenu">
+                            <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
+                            <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                        </div>
+                    </div>
+                    <div class="hs_avatar">
+                        <img class="hs_avatarImage" src="@checkin.user.avatar" alt="Mackenzie Marshall">
+                        <a href="#" class="hs_avatarLink" title="Username"></a>
                     </div>
 
-                        <!--
-          <img style="width: 28px; height: 28px; border-radius: 4px; vertical-align: middle" src="https://pbs.twimg.com/profile_images/461409373709811712/rD3OvWzE.jpeg" alt="Untappd for Hootsuite">
-          <span style="font-weight: bold;">Untappd for Hootsuite</span>
-          -->
-                    <span style="font-weight: bold;">Checkin Feed </span>
-                </div>
-            </div>
-            <div class="hs_topBarSpace"></div>
+                    <div class="hs_content">
+                        <a href="#" class="hs_userName" title="@checkin.user.first_name @checkin.user.last_name">@checkin.user.first_name @checkin.user.last_name</a>
+                        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
 
-    @for(checkin <- checkins) {
-        <div class="hs_message">
-            <a href="#" class="hs_networkAvatarLink"></a>
-            <img class="hs_networkAvatar" src="@checkin.user.avatar" alt="Mackenzie Marshall">
-
-            <a href="#" class="hs_networkName">@checkin.user.first_name @checkin.user.last_name</a>
-
-            <a href="[PERMALINK / SOURCE URL]" class="hs_postTime" target="_blank">3 hours ago</a>
-
-            <div class="hs_messageContent">
-                @checkin.user_comment
-                    <!-- Comment goes here -->
-
-            </div>
-
-            <div class="hs_postAttachment">
-
-                    <!-- This should link out directly to the source page -->
-                <a class="hs_attachedLink " href="#" target="_blank">
-                        <!-- Thumb: max. 130x200px (gets scaled down automatically) -->
-                    <img alt="@checkin.beer.name by @checkin.brewery.name" src="@checkin.beer.label">
-                </a>
-
-                <div class="hs_title">
-                        <!-- This should link out directly to the source page -->
-                    <a href="#" target="_blank">@checkin.beer.name</a>
-                </div>
-
-                <div class="hs_caption">by <a href="#">@checkin.brewery.name</a></div><!-- The link's domain name -->
-                <div class="hs_description">
-
-                    <span class="rating small r@checkin.rating"></span>
-
-                </div>
-
-
-            </div>
-
-            <div class="hs_messageComments">
-                @if(checkin.toasts.isDefined) {
-                    @if(checkin.toasts.get.size > 3) {
-                        <span class="hs_arrow">☗</span>
-
-                        <div class="hs_comment hs_details">
-                            <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
-                            , <a href="#">@checkin.toasts.get.apply(1).user.first_name @checkin.toasts.get.apply(1).user.last_name</a>
-                            and <a href="#">@(checkin.toasts.size - 2) others</a> have toasted this
-                        </div>
-                    } else {
-                        @if(checkin.toasts.get.size == 3) {
-                            <span class="hs_arrow">☗</span>
-
-                            <div class="hs_comment hs_details">
-                                <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
-                                , <a href="#">@checkin.toasts.get.apply(1).user.first_name @checkin.toasts.get.apply(1).user.last_name</a>
-                                and <a href="#">@(checkin.toasts.size - 2) other</a> have toasted this
+                        <div class="hs_contentText">
+                            <p>@checkin.user_comment</p>
+                                <!--Optional Image-->
+                            <div class="hs_mediaGallery">
+                                <a class="hs_attachedMedia" href="#">
+                                        <!--Single images are cropped to a 16:9 ratio-->
+                                    <img alt="@checkin.beer.name by @checkin.brewery.name" src="@checkin.beer.label">
+                                </a>
                             </div>
-                        } else {
-                            @if(checkin.toasts.get.size == 2) {
-                                <span class="hs_arrow">☗</span>
+                            <span class="hs_postTitle">@checkin.beer.name</span>
+                            <span class="hs_postCaption">by <a href="#">@checkin.brewery.name</a><span class="rating small r@checkin.rating"></span></span>
+                        </div>
 
-                                <div class="hs_comment hs_details">
-                                    <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
-                                    and <a href="#">@checkin.toasts.get.apply(1).user.first_name @checkin.toasts.get.apply(1).user.last_name</a>
-                                    have toasted this
+                        <ul class="hs_metrics">
+                            <li class="hs_metricsItem"><a href="#">@checkin.toasts.get.size likes</a></li>
+                            <li class="hs_metricsItem"><a href="#">@checkin.comments.get.size comments</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="hs_comments">
+                        <div class="hs_commentsHeader">
+                            <span class="hs_commentsCounter">4 of 20</span>
+                            <a class="hs_commentsViewPrevious" href="#"><span class="icon-app-dir x-comment"></span>View previous comments</a>
+                        </div>
+
+                            <!--First Comment-->
+                        @if(checkin.comments.isDefined) {
+                            @for(comment <- checkin.comments.get) {
+                                <div class="hs_comment">
+                                    <div class="hs_messageOptions">
+                                        <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
+                                        <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
+
+                                        <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
+
+                                        <div class="hs_moreOptionsMenu">
+                                            <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
+                                            <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="hs_commentAvatar">
+                                        <img class="hs_commentAvatarImage" src="@comment.user.avatar" alt="@comment.user.first_name @comment.user.last_name">
+                                        <a href="#" class="hs_commentAvatarLink" title="Username"></a>
+                                    </div>
+
+                                    <div class="hs_commentContent">
+                                        <a href="#" class="hs_commentUserName" title="Username">@comment.user.first_name @comment.user.last_name</a>
+                                        <a href="#" class="hs_commentPostTime" target="_blank" title="@comment.created_at">@comment.created_at</a>
+
+                                        <div class="hs_commentContentText">
+                                            <p>@comment.comment</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            } else {
-                                @if(checkin.toasts.get.size == 1) {
-                                    <span class="hs_arrow">☗</span>
-
-                                    <div class="hs_comment hs_details">
-                                        <a href="#">@checkin.toasts.get.head.user.first_name @checkin.toasts.get.head.user.last_name</a>
-                                        has toasted this
-                                    </div>
-                                } else {
-                                    <span class="hs_arrow">☗</span>
-
-                                    <div class="hs_comment hs_details">
-                                        No one has toasted this
-                                    </div>
-                                }
                             }
                         }
-                    }
-                }
-                @if(checkin.comments.isDefined) {
-                    @for(comment <- checkin.comments.get) {
-                        <div class="hs_comment">
-                            <a title="Username" class="hs_networkAvatarLink" href="#"></a>
-                            <img class="hs_networkAvatar" src="@comment.user.avatar" alt="@comment.user.first_name @comment.user.last_name">
-                            <p class="hs_commentContent">
-                                <a title="Username" class="hs_networkName" href="#">@comment.user.first_name @comment.user.last_name</a>
-                                : @comment.comment
-                                <span class="hs_date">@comment.created_at</span>
-                            </p>
-                        </div>
-                    }
-                }
-                <div class="hs_commentEntry hs_comment">
-                    <div class="hs_btns hs_btns-left">
-                        <a class="hs_btn-cmt" href="#">Toast</a>
-                        <a class="hs_btn-cmt" href="#">Comment</a>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    }
+            }
         </div>
     </body>
 </html>
