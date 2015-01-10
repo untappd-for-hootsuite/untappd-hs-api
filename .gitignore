@@ -15,4 +15,4 @@ dist
 /.settings
 .DS_Store
 /run.sh
-/app/assets/bower_components
+/public/third-party
