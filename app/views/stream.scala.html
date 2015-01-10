@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/ratings.css")">
+
+    <!--
+HootSuite API JS Library
+NOTE: To test themes outside of the dashboard, add '?theme=blue_steel' to your url [blue_steel, magnum, classic]
+-->
+    <link type="text/css" rel="stylesheet" href="https://d2l6uygi1pgnys.cloudfront.net/jsapi/0-6/assets/css/ad_default.css">
+
+    <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/0-6/hsp.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+
+    <script type="text/javascript" src="@routes.Assets.at("js/hootsuite-init.js")"></script>
+    </head>
+    <body>
+        <div class="hs_stream">
+                <!--Top Bar-->
+            <div class="hs_topBar">
+                <div class="hs_topBarContent">
+                        <!--Right-Side Controls-->
+                    <ul class="hs_topBarControls">
+                        <li class="hs_topBarControlsBtn" data-dropdown="WriteMessage" title="Write Message">
+                            <span class="icon-app-dir x-compose"></span>
+                        </li>
+                        <li class="hs_topBarControlsBtn" data-dropdown="Search" title="Search">
+                            <span class="icon-app-dir x-search"></span>
+                        </li>
+                        <li class="hs_topBarControlsBtn" data-dropdown="Settings" title="Settings">
+                            <span class="icon-app-dir x-settings"></span>
+                        </li>
+                        <li class="hs_topBarControlsBtn" data-dropdown="MenuList" title="More">
+                            <span class="icon-app-dir x-ellipsis"></span>
+                        </li>
+                    </ul>
+
+                        <!--Left-Side Title-->
+                    <h1 class="hs_topBarTitle">Top bar</h1>
+                </div>
+
+                    <!--Drop Downs-->
+                    <!--Write Message-->
+                <div class="hs_topBarDropdown hs_dropdownWriteMessage" data-dropdown="WriteMessage">
+                    <button class="hs_btnCtaSml hs_btnTypeSubmit">Send</button>
+                    <div class="hs_searchWrapper">
+                        <label class="hs_isVisuallyHidden" for="hs_writeMessageInputExample">Search:</label>
+                        <input id="hs_writeMessageInputExample" type="text">
+                    </div>
+                </div>
+
+                    <!--Search-->
+                <div class="hs_topBarDropdown hs_dropdownSearch" data-dropdown="Search">
+                    <button class="hs_btnCtaSml hs_btnTypeSubmit">Search</button>
+                    <div class="hs_searchWrapper">
+                        <label class="hs_isVisuallyHidden" for="hs_searchInputExample">Search:</label>
+                        <input id="hs_searchInputExample" type="text">
+                    </div>
+                </div>
+
+                    <!--Settings-->
+                <div class="hs_topBarDropdown hs_dropdownSettings" data-dropdown="Settings">
+                    <a class="hs_settingsLink" href="#">Settings Link</a>
+                    <label for="hs_settingsCheckboxExample" class="hs_title">
+                        <input id="hs_settingsCheckboxExample" type="checkbox" /> Setting 1
+                    </label>
+                    <button class="hs_btnCtaSml hs_btnTypeSubmit">Save</button>
+                </div>
+
+                    <!--Menu List-->
+                <ul class="hs_topBarDropdown hs_dropdownMenuList" data-dropdown="MenuList">
+                    <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 1</a></li>
+                    <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 2</a></li>
+                    <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 3</a></li>
+                </ul>
+            </div>
+
+
+                <div class="hs_message">
+                    <div class="hs_messageOptions">
+                            <!--
+                  NOTE: Do not show more than 4 icons; use the drop down if you need 5 or more
+                        "Share" links should open the Compose Message dialog in the Hootsuite dashboard via hsp.composeMessage()
+                -->
+                        <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
+                        <button class="hs_messageOptionsBtn icon-app-dir x-retweet" title="Retweet"></button>
+                        <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
+
+                        <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
+
+                        <div class="hs_moreOptionsMenu">
+                            <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
+                            <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                        </div>
+                    </div>
+                    <div class="hs_avatar">
+                        <img class="hs_avatarImage" src="https://gravatar.com/avatar/0c6922e238dae5cccce96a32889fc911?size=100&d=htt…44.cloudfront.net%2Fsite%2Fassets%2Fimages%2Fdefault_avatar_v2.jpg%3Fv%3D1" alt="Mackenzie Marshall">
+                        <a href="#" class="hs_avatarLink" title="Username"></a>
+                    </div>
+
+                    <div class="hs_content">
+                        <a href="#" class="hs_userName" title="Peter Jackson">Peter Jackson</a>
+                        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
+
+                        <div class="hs_contentText">
+                            <p>Great beer!</p>
+                                <!--Optional Image-->
+                            <div class="hs_mediaGallery">
+                                <a class="hs_attachedMedia" href="#">
+                                        <!--Single images are cropped to a 16:9 ratio-->
+                                    <img alt="Christmas Ale by Abita Brewing Company" src="https://d1c8v1qci5en44.cloudfront.net/site/brewery_logos/brewery-AbitaBrewingCompany_10.jpeg" class="hs_isProcessed">
+                                </a>
+                            </div>
+                            <span class="hs_postTitle">Christmas Ale</span>
+                            <span class="hs_postCaption">by <a href="#">Abita Brewing Company</a><span class="rating small r3"></span></span>
+                        </div>
+
+                        <ul class="hs_metrics">
+                            <li class="hs_metricsItem"><a href="#">5 likes</a></li>
+                            <li class="hs_metricsItem"><a href="#">1 comments</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="hs_comments">
+                        <div class="hs_commentsHeader">
+                            <span class="hs_commentsCounter">4 of 20</span>
+                            <a class="hs_commentsViewPrevious" href="#"><span class="icon-app-dir x-comment"></span>View previous comments</a>
+                        </div>
+
+                            <!--First Comment-->
+                                <div class="hs_comment">
+                                    <div class="hs_messageOptions">
+                                        <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
+                                        <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
+
+                                        <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
+
+                                        <div class="hs_moreOptionsMenu">
+                                            <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
+                                            <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="hs_commentAvatar">
+                                        <img class="hs_commentAvatarImage" src="https://gravatar.com/avatar/0c6922e238dae5cccce96a32889fc911?size=100&d=htt…44.cloudfront.net%2Fsite%2Fassets%2Fimages%2Fdefault_avatar_v2.jpg%3Fv%3D1" alt="Peter Jackson">
+                                        <a href="#" class="hs_commentAvatarLink" title="Username"></a>
+                                    </div>
+
+                                    <div class="hs_commentContent">
+                                        <a href="#" class="hs_commentUserName" title="Username">Tom Selleck</a>
+                                        <a href="#" class="hs_commentPostTime" target="_blank" title="Comment Created At">3:45</a>
+
+                                        <div class="hs_commentContentText">
+                                            <p>Delicious!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+
+        </div>
+    </body>
+</html>
