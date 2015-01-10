@@ -4,6 +4,8 @@
 
 # Home page
 GET     /users/:username/checkins   controllers.Users.checkins(username)
+GET     /checkins/recent            controllers.Checkins.recent
+GET     /login                      controllers.Login.redirect
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
