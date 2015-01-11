@@ -15,4 +15,3 @@ dist
 /.settings
 .DS_Store
 /run.sh
-/public/third-party
