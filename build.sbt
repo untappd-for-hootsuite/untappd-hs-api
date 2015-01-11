@@ -13,3 +13,7 @@ libraryDependencies ++= Seq(
   ws,
   "com.ning" % "async-http-client" % "1.8.14"
 )
+
+includeFilter in (Assets, LessKeys.less) := "*.less"
+
+excludeFilter in (Assets, LessKeys.less) := "_*.less"
