@@ -1,6 +1,14 @@
+@(token: String)
+
 <!DOCTYPE html>
 <html ng-app="untappdService">
 <head>
+    <script language="javascript">
+        var untappd = {
+          authToken: "@token"
+        };
+    </script>
+
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/ratings.css")">
 
     <!-- HootSuite API JS + CSS Library -->
