@@ -2,10 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# General handlers
+GET     /login                      controllers.Login.redirect
+POST    /hs-callback                controllers.Hootsuite.callback(uid: String, timezone: String, lang: String, isSsl: Int, pid: String, theme: String)
+
 # API
 GET     /users/:username/checkins   controllers.Users.checkins(username)
 GET     /checkins/recent            controllers.Checkins.recent
-GET     /login                      controllers.Login.redirect
 
 # UI
 GET     /ui/stream                  controllers.ui.Stream.default(token: Option[String])
