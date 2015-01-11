@@ -113,7 +113,7 @@ object Checkin {
       (json \ "toasts" \ "items").as[Option[List[Toast]]],
       (json \ "comments" \ "items").as[Option[List[Comment]]],
       (json \ "checkin_comment").as[String],
-      (json \ "rating_score").as[Int],
+      (json \ "rating_score").as[Int]*10,
       (json \ "created_at").as[String]
     ))
 
