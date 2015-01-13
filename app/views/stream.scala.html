@@ -119,7 +119,7 @@
                             </a>
                         </div>
                         <span class="hs_postTitle">{{checkin.beer.beer_name}}</span>
-                        <span class="hs_postCaption">by <a href="#">{{checkin.brewery.brewery_name}}</a><span class="rating small r3"></span></span>
+                        <span class="hs_postCaption">by <a href="#">{{checkin.brewery.brewery_name}}</a><span class="rating small r{{checkin.rating_score*10}}"></span></span>
                     </div>
 
                     <ul class="hs_metrics">
@@ -127,38 +127,41 @@
                         <li class="hs_metricsItem"><a href="#">{{checkin.comments.count}} comments</a></li>
                     </ul>
                 </div>
-
-                <div class="hs_comments">
-                    <div class="hs_commentsHeader">
-                        <span class="hs_commentsCounter">4 of 20</span>
-                        <a class="hs_commentsViewPrevious" href="#"><span class="icon-app-dir x-comment"></span>View previous comments</a>
-                    </div>
-
-                    <!--First Comment-->
-                    <div class="hs_comment" ng-repeat="comment in checkin.comments.items">
-                        <div class="hs_messageOptions">
-                            <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-                            <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-
-                            <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-                            <div class="hs_moreOptionsMenu">
-                                <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-                                <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                <div ng-if="checkin.comments.count > 0">
+                    <div class="hs_comments">
+                        <div ng-if="checkin.comments.count > 2"
+                            <div class="hs_commentsHeader">
+                                <span class="hs_commentsCounter">2 of {{checkin.comments.count}}</span>
+                                <a class="hs_commentsViewPrevious" href="#"><span class="icon-app-dir x-comment"></span>View previous comments</a>
                             </div>
                         </div>
 
-                        <div class="hs_commentAvatar">
-                            <img class="hs_commentAvatarImage" ng-src="{{comment.user.user_avatar}}" alt="{{comment.user.first_name + ' ' + comment.user.last_name}}">
-                            <a href="#" class="hs_commentAvatarLink" title="{{comment.user.first_name + ' ' + comment.user.last_name}}"></a>
-                        </div>
+                            <!--First Comment-->
+                        <div class="hs_comment" ng-repeat="comment in checkin.comments.items|limitTo:-2">
+                            <div class="hs_messageOptions">
+                                <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
+                                <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
 
-                        <div class="hs_commentContent">
-                            <a href="#" class="hs_commentUserName" title="{{comment.user.first_name + ' ' + comment.user.last_name}}">{{comment.user.first_name + ' ' + comment.user.last_name}}</a>
-                            <a href="#" class="hs_commentPostTime" target="_blank" title="Created at {{comment.created_at}}">{{comment.created_at}}</a>
+                                <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
 
-                            <div class="hs_commentContentText">
-                                <p>{{comment.comment}}</p>
+                                <div class="hs_moreOptionsMenu">
+                                    <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
+                                    <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                                </div>
+                            </div>
+
+                            <div class="hs_commentAvatar">
+                                <img class="hs_commentAvatarImage" ng-src="{{comment.user.user_avatar}}" alt="{{comment.user.first_name + ' ' + comment.user.last_name}}">
+                                <a href="#" class="hs_commentAvatarLink" title="{{comment.user.first_name + ' ' + comment.user.last_name}}"></a>
+                            </div>
+
+                            <div class="hs_commentContent">
+                                <a href="#" class="hs_commentUserName" title="{{comment.user.first_name + ' ' + comment.user.last_name}}">{{comment.user.first_name + ' ' + comment.user.last_name}}</a>
+                                <a href="#" class="hs_commentPostTime" target="_blank" title="Created at {{comment.created_at}}">{{comment.created_at}}</a>
+
+                                <div class="hs_commentContentText">
+                                    <p>{{comment.comment}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
