@@ -7,7 +7,6 @@ POST        /hs-callback                    controllers.Hootsuite.callback(uid: 
 # API
 GET        /users/:username/checkins        controllers.Users.checkins(username)
 GET        /checkins/recent                 controllers.Checkins.recent
-POST       /users/checkins                  controllers.Users.my_checkins()
 
 # UI
 GET        /ui/stream                       controllers.ui.Stream.default(token: Option[String])

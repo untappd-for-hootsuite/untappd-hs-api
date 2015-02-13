@@ -15,3 +15,7 @@ tmp
 /.settings
 .DS_Store
 /run.sh
+project/*.sbt
+projectFilesBackup/
+app/assets/.DS_Store
+

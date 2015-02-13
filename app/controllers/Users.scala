@@ -27,22 +27,4 @@ object Users extends Controller {
 
     Ok(Json.parse(resp.getResponseBody))
   }
-
-
-  def my_checkins() = Action { request =>
-    val accessToken = "A8FDF1C54B97E1B86FCBA74105E9A1CDB48278BF"
-
-    val client = new AsyncHttpClient()
-    val get = client.prepareGet(s"http://api.untappd.com/v4/checkin/recent?access_token=$accessToken")
-    val future = get.execute()
-
-    val resp = future.get()
-
-    val json = Json.parse(resp.getResponseBody).as[JsObject]
-
-    val apiCheckins = (json \ "response" \ "checkins" \ "items").as[Seq[Checkin]]
-
-    Ok(views.html.streams(apiCheckins))
-    //Ok(apiResponse)
-  }
 }
