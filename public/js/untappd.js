@@ -37,5 +37,15 @@
         this.checkins = checkins;
       }.bind(this));
     }.bind(this));
+
+    var toastEndpoint = "/checkins/toast/";
+
+    $scope.toast = function (checkin_id) {
+      $http.get(toastEndpoint + checkin_id, {
+        headers: {
+          'X-Auth-Token': token
+        }
+      })
+    }
   });
 })();

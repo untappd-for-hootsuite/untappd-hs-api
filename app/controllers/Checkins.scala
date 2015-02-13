@@ -24,4 +24,22 @@ object Checkins extends Controller with AuthTokenManager {
 
     }
   }
+
+  def toast(checkinId: String) = Action.async { implicit request =>
+    val oAuthToken = getUntappdAuthToken
+
+    println(s"Calling toast on $checkinId")
+
+    oAuthToken match {
+      case None => Future(Unauthorized(s"Request must include valid ${AuthTokenManager.tokenHeader} header"))
+      case Some(authToken) =>
+        val holder: WSRequestHolder = WS.url(s"https://api.untappd.com/v4/checkin/toast/$checkinId")
+          .withQueryString("access_token" -> authToken)
+
+        holder.get().map { resp =>
+          println(resp.json)
+          Ok(resp.json)
+        }
+    }
+  }
 }
