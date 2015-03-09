@@ -108,8 +108,8 @@
                     </div>
 
                     <ul class="hs_metrics">
-                        <li class="hs_metricsItem"><a class="_toastCount" ng-click="toast(checkin.checkin_id)">{{checkin.toasts.count}} toasts</a> </li>
-                        <li class="hs_metricsItem"><a class="_commentCount" ng-click="showComments(checkin.checkin_id)">{{checkin.comments.count}} comments</a></li>
+                        <li class="hs_metricsItem"><a class="_toastCount" ng-click="toast(checkin.checkin_id)">{{checkin.toasts.total_count}} toasts</a> </li>
+                        <li class="hs_metricsItem"><a class="_commentCount" ng-click="showComments(checkin.checkin_id)">{{checkin.comments.total_count}} comments</a></li>
                     </ul>
                 </div>
                 <div class="hs_comments hidden">
@@ -152,7 +152,7 @@
                     <!--Add a comment-->
                     <div class="hs_comment">
                         <div class="hs_commentAvatar">
-                            <img class="hs_commentAvatarImage" src="https://d1cmhiswqj5a7e.cloudfront.net/http%3A%2F%2Fplacehold.it%2F25x25%2F003366" alt="Avatar">
+                            <img class="hs_commentAvatarImage" src="{{userAvatar}}" alt="Avatar">
                             <a href="#" class="hs_commentAvatarLink" title="Username"></a>
                         </div>
 

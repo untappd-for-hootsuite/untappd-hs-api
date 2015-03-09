@@ -5,6 +5,16 @@
     // Before anything, load the auth token
     var token = untappd.authToken;
 
+    var userInfoEndpoint = "/users/info";
+    $http.get(userInfoEndpoint, {
+      headers: {
+        'X-Auth-Token': token
+      }
+    }).success(function(data) {
+      console.log(data.response.user.user_avatar);
+      $scope.userAvatar = data.response.user.user_avatar;
+    });
+
     var checkinEndpoint = "/checkins/recent";
 
     this.checkins = [];
@@ -53,7 +63,7 @@
 
         $(checkinSelector).find('._toastCount').html(toastCount + " toasts")
       });
-      
+
     };
 
     // Method to add a comment to a checkin

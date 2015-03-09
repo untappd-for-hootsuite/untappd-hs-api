@@ -1,12 +1,18 @@
 package controllers
 
+
+import controllers.auth.AuthTokenManager
 import play.api.Play
 import play.api.libs.json._
+import play.api.libs.ws._
 import play.api.mvc.{Controller, Action}
 import com.ning.http.client.AsyncHttpClient
 import play.api.Play.current
 
-object Users extends Controller {
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
+object Users extends Controller with AuthTokenManager {
   def checkins(username: String) = Action { request =>
     val clientId = Play.application.configuration.getString("untappd.client_id").getOrElse("")
     val clientSecret = Play.application.configuration.getString("untappd.client_secret").getOrElse("")
@@ -23,5 +29,21 @@ object Users extends Controller {
     val resp = future.get()
 
     Ok(Json.parse(resp.getResponseBody))
+  }
+
+  def info() =  Action.async { implicit request =>
+    val oAuthToken = getUntappdAuthToken
+
+    oAuthToken match {
+      case None => Future(Unauthorized(s"Request must include valid ${AuthTokenManager.tokenHeader} header"))
+      case Some(authToken) =>
+        val holder: WSRequestHolder = WS.url(s"https://api.untappd.com/v4/user/info")
+        .withQueryString("access_token" -> authToken)
+
+        holder.get().map { resp =>
+          println(resp.json)
+          Ok(resp.json)
+        }
+    }
   }
 }
