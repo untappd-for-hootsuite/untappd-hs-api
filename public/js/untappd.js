@@ -38,14 +38,44 @@
       }.bind(this));
     }.bind(this));
 
+    // Method for front end to update their toast for a checkin
     var toastEndpoint = "/checkins/toast/";
 
     $scope.toast = function (checkin_id) {
-      $http.get(toastEndpoint + checkin_id, {
+      var checkinSelector = '._checkin'+checkin_id;
+
+      var response = $http.get(toastEndpoint + checkin_id, {
         headers: {
           'X-Auth-Token': token
         }
-      })
+      }).success(function(data) {
+        var toastCount = data.response.toasts.total_count;
+
+        $(checkinSelector).find('._toastCount').html(toastCount + " toasts")
+      });
+      
+    };
+
+    // Method to add a comment to a checkin
+    var commentEndpoint = "/checkins/addcomment/"
+
+    $scope.addComment = function (checkin_id, comment) {
+      var data = {
+        'shout': comment
+      };
+      $http.post(commentEndpoint + checkin_id, data, {
+        headers: {
+          'X-Auth-Token': token
+        }
+      });
+    };
+
+    // Method to show comments of a checkin
+    $scope.showComments = function (checkin_id) {
+      var checkinSelector = '._checkin'+checkin_id;
+
+      $(checkinSelector).find('.hs_comments').removeClass('hidden')
     }
+
   });
 })();

@@ -10,13 +10,14 @@
     </script>
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/ratings.css")">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/hs_untappd.css")">
 
     <script src="@routes.Assets.at("third-party/jquery/dist/jquery.min.js")"></script>
     <script src="@routes.Assets.at("third-party/angular/angular.min.js")"></script>
     <script src="@routes.Assets.at("js/untappd.js")"></script>
 
     <!-- HootSuite API JS + CSS Library -->
-    <link type="text/css" rel="stylesheet" href="https://d2l6uygi1pgnys.cloudfront.net/jsapi/0-6/assets/css/ad_default.css">
+    <link type="text/css" rel="stylesheet" href="https://d2l6uygi1pgnys.cloudfront.net/jsapi/1-0/assets/css/ad_default.css">
     <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/1-0-dev/hsp.js"></script>
     <!-- END Hootsuite API -->
 
@@ -83,23 +84,7 @@
                 </ul>
             </div>
 
-            <div class="hs_message" ng-repeat="checkin in streamCtrl.checkins">
-                <div class="hs_messageOptions">
-                        <!--
-                          NOTE: Do not show more than 4 icons; use the drop down if you need 5 or more
-                                "Share" links should open the Compose Message dialog in the Hootsuite dashboard via hsp.composeMessage()
-                        -->
-                    <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-                    <button class="hs_messageOptionsBtn icon-app-dir x-retweet" title="Retweet"></button>
-                    <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike" ng-click="toast(checkin.checkin_id)"></button>
-
-                    <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-                    <div class="hs_moreOptionsMenu">
-                        <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-                        <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
-                    </div>
-                </div>
+            <div class="hs_message _checkin{{checkin.checkin_id}}" ng-repeat="checkin in streamCtrl.checkins">
                 <div class="hs_avatar">
                     <img class="hs_avatarImage" ng-src="{{checkin.user.user_avatar}}" alt="{{checkin.user.first_name + ' ' + checkin.user.last_name}}">
                     <a href="#" class="hs_avatarLink" title="{{checkin.user.first_name + ' ' + checkin.user.last_name}}"></a>
@@ -119,24 +104,23 @@
                             </a>
                         </div>
                         <span class="hs_postTitle">{{checkin.beer.beer_name}}</span>
-                        <span class="hs_postCaption">by <a href="#">{{checkin.brewery.brewery_name}}</a><span class="rating small r{{checkin.rating_score*10}}"></span></span>
+                        <span class="hs_postCaption">by <a href="">{{checkin.brewery.brewery_name}}</a><span class="rating small r{{checkin.rating_score*10}}"></span></span>
                     </div>
 
                     <ul class="hs_metrics">
-                        <li class="hs_metricsItem"><a href="#">{{checkin.toasts.count}} toasts</a></li>
-                        <li class="hs_metricsItem"><a href="#">{{checkin.comments.count}} comments</a></li>
+                        <li class="hs_metricsItem"><a class="_toastCount" ng-click="toast(checkin.checkin_id)">{{checkin.toasts.count}} toasts</a> </li>
+                        <li class="hs_metricsItem"><a class="_commentCount" ng-click="showComments(checkin.checkin_id)">{{checkin.comments.count}} comments</a></li>
                     </ul>
                 </div>
-                <div ng-if="checkin.comments.count > 0">
-                    <div class="hs_comments">
-                        <div ng-if="checkin.comments.count > 2"
+                <div class="hs_comments hidden">
+                    <div ng-if="checkin.comments.count > 0">
+                        <div ng-if="checkin.comments.count > 2">
                             <div class="hs_commentsHeader">
                                 <span class="hs_commentsCounter">2 of {{checkin.comments.count}}</span>
                                 <a class="hs_commentsViewPrevious" href="#"><span class="icon-app-dir x-comment"></span>View previous comments</a>
                             </div>
                         </div>
-
-                            <!--First Comment-->
+                        <!--First Comment-->
                         <div class="hs_comment" ng-repeat="comment in checkin.comments.items|limitTo:-2">
                             <div class="hs_messageOptions">
                                 <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
@@ -161,6 +145,22 @@
 
                                 <div class="hs_commentContentText">
                                     <p>{{comment.comment}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Add a comment-->
+                    <div class="hs_comment">
+                        <div class="hs_commentAvatar">
+                            <img class="hs_commentAvatarImage" src="https://d1cmhiswqj5a7e.cloudfront.net/http%3A%2F%2Fplacehold.it%2F25x25%2F003366" alt="Avatar">
+                            <a href="#" class="hs_commentAvatarLink" title="Username"></a>
+                        </div>
+
+                        <div class="hs_commentContent">
+                            <div class="hs_commentContentText">
+                                <textarea class="hs_commentEntryArea" data-placeholder="Add a comment..." title="Press enter ↵ to submit"></textarea>
+                                <div class="hs_commentActions">
+                                    <a class="hs_btnCtaSml hs_btnTypeSubmit" href="#">Add</a>
                                 </div>
                             </div>
                         </div>
