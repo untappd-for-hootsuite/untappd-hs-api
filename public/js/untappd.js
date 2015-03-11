@@ -67,17 +67,18 @@
     };
 
     // Method to add a comment to a checkin
-    var commentEndpoint = "/checkins/addcomment/"
+    var commentEndpoint = "/checkins/comment/";
 
-    $scope.addComment = function (checkin_id, comment) {
-      var data = {
-        'shout': comment
-      };
-      $http.post(commentEndpoint + checkin_id, data, {
-        headers: {
-          'X-Auth-Token': token
-        }
-      });
+    $scope.addComment = function ($event, checkin_id) {
+      if ($event.which == 13) {
+        var comment = $('._checkin' + checkin_id).find('.hs_commentEntryArea').val();
+        $http.get(commentEndpoint + checkin_id + "?comment=" + comment, {
+          headers: {
+            'X-Auth-Token': token
+          }
+        });
+        $event.preventDefault();
+      }
     };
 
     // Method to show comments of a checkin

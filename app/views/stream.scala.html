@@ -158,7 +158,7 @@
 
                         <div class="hs_commentContent">
                             <div class="hs_commentContentText">
-                                <textarea class="hs_commentEntryArea" data-placeholder="Add a comment..." title="Press enter ↵ to submit"></textarea>
+                                <textarea class="hs_commentEntryArea" data-placeholder="Add a comment..." title="Press enter ↵ to submit" ng-keypress="addComment($event, checkin.checkin_id)"></textarea>
                                 <div class="hs_commentActions">
                                     <a class="hs_btnCtaSml hs_btnTypeSubmit" href="#">Add</a>
                                 </div>

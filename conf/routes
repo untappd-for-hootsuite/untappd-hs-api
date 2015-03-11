@@ -9,6 +9,7 @@ GET         /users/:username/checkins         controllers.Users.checkins(usernam
 GET         /users/info                       controllers.Users.info()
 GET         /checkins/recent                  controllers.Checkins.recent
 GET         /checkins/toast/:checkinId        controllers.Checkins.toast(checkinId)
+GET         /checkins/comment/:checkinId      controllers.Checkins.comment(checkinId)
 
 # UI
 GET         /ui/stream                        controllers.ui.Stream.default(token: Option[String])
